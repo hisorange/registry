@@ -7,7 +7,7 @@ use hisorange\Registry\Manager;
 // Interfaces.
 use ArrayAccess;
 use hisorange\Registry\Interfaces\Manager          as ManagerInterface;
-// Execptions.
+// Exceptions.
 use hisorange\Registry\Exceptions\NamespaceMissing as NamespaceMissingException;
 
 // PSR/LOG.
@@ -98,7 +98,7 @@ class Pool implements ArrayAccess/*, LoggerAwareInterface*/
     /**
      * Easy way to hook into the manager's instance creation
      * if you wana use your custom manager class,
-     * simply extend your custom Pool and overide this function.
+     * simply extend your custom Pool and override this function.
      *
      * @return \hisorange\Registry\Interfaces\Manager
      */
