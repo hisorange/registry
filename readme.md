@@ -22,3 +22,4 @@ General introduction.
 + Multiple persister if not a big problem.
 + Registry::setPersister(new JsonPersister('data/registry.json'));
 + Implement collection like functions, count, seek, last, first, etc.
++ only, except functions on the manager.
