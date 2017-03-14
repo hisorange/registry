@@ -24,7 +24,9 @@ class Manager implements ArrayAccess, ManagerInterface
      */
     public function __construct(array $init = [])
     {
-        $this->importArray($init);
+        if (func_num_args()) {
+            $this->importArray($init);
+        }
     }
 
     /**
@@ -33,7 +35,7 @@ class Manager implements ArrayAccess, ManagerInterface
      * @param  array $subject
      * @return void
      */
-    public function importArray($subject)
+    public function importArray(array $subject)
     {
         foreach ((array) $subject as $key => $value) {
             $this->set($key, $value);
