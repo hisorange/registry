@@ -46,6 +46,30 @@ interface Manager
     public function set($key, $value);
 
     /**
+     * Delete one or more entity if registered, throws exception if not registered.
+     * $registry->delete('foo');
+     * $registry->delete('foo', 'bar');
+     * $registry->delete(array('foo', 'bar'));
+     *
+     * @throws \hisorange\Registry\Exceptions\EntityMissing
+     *
+     * @param  string|array $key At least one key is required.
+     * @return void
+     */
+    public function delete($key);
+
+    /**
+     * Delete one or more entity if registered.
+     * $registry->deleteIf('foo');
+     * $registry->deleteIf('foo', 'bar');
+     * $registry->deleteIf(array('foo', 'bar'));
+     *
+     * @param  string|array $key At least one key is required.
+     * @return void
+     */
+    public function deleteIf($key);
+
+    /**
      * Export the registry as internaly stored.
      *
      * @return array

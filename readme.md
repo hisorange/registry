@@ -18,8 +18,6 @@ General introduction.
 + XML import / export.
 + Array flattening support on the manager.
 + Check if a nesting is a big deal or not, like we can replace an entity with a manager and its nested, so the dotted access is not impossible.
-+ Support multiple arg on delete function. ->delete('a', 'b', 'c');
-+ Add deleteIf() function, which does not drop exception on missing key.
 + Sync with a persistent storage, JSON, SQL, INI, XML something like that allow live sync.
 + Multiple persister if not a big problem.
 + Registry::setPersister(new JsonPersister('data/registry.json'));

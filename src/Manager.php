@@ -193,10 +193,30 @@ class Manager implements ArrayAccess, ManagerInterface
      */
     public function delete($key)
     {
-        if ($this->has($key)) {
-            unset($this->registry[$key]);
-        } else {
-            throw new EntityMissingException($key);
+        foreach (func_get_args() as $key) {
+            if (is_array($key)) {
+                call_user_func_array([$this, __FUNCTION__], $key);
+            } else {
+                if ($this->has($key)) {
+                    unset($this->registry[$key]);
+                } else {
+                    throw new EntityMissingException($key);
+                }
+            }
+        }
+    }
+
+    /**
+     * {@inheritdocs}
+     */
+    public function deleteIf($key)
+    {
+        foreach (func_get_args() as $key) {
+            if (is_array($key)) {
+                call_user_func_array([$this, __FUNCTION__], $key);
+            } else {
+                unset($this->registry[$key]);
+            }
         }
     }
 
