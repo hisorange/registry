@@ -102,9 +102,7 @@ class Manager implements ArrayAccess, ManagerInterface
     }
 
     /**
-     * Export the registry as internaly stored.
-     *
-     * @return array
+     * {@inheritdocs}
      */
     public function exportRaw()
     {
@@ -128,9 +126,7 @@ class Manager implements ArrayAccess, ManagerInterface
     }
 
     /**
-     * Reset the registry to an empty state.
-     *
-     * @return void
+     * {@inheritdocs}
      */
     public function reset()
     {

@@ -46,11 +46,16 @@ interface Manager
     public function set($key, $value);
 
     /**
-     * Delete an entity if registered, throws exception if not registered.
-     * @throws \hisorange\Registry\Exceptions\EntityMissing
+     * Export the registry as internaly stored.
      *
-     * @param  string $key
+     * @return array
+     */
+    public function exportRaw();
+
+    /**
+     * Reset the registry to an empty state.
+     *
      * @return void
      */
-    public function delete($key);
+    public function reset();
 }
