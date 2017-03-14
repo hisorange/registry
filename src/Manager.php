@@ -18,6 +18,124 @@ class Manager implements ArrayAccess, ManagerInterface
     protected $registry = [];
 
     /**
+     * Manager can be initialized with it's configuration values.
+     *
+     * @param array $init
+     */
+    public function __construct(array $init = [])
+    {
+        $this->importArray($init);
+    }
+
+    /**
+     * Import registry key / value pairs from an array.
+     *
+     * @param  array $subject
+     * @return void
+     */
+    public function importArray($subject)
+    {
+        foreach ((array) $subject as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
+    /**
+     * Import registry key / value pairs from a json string.
+     *
+     * @param  string $json
+     * @return void
+     */
+    public function importJsonString($json)
+    {
+        $this->importArray(json_decode($json, true));
+    }
+
+    /**
+     * Import registry key / value pairs from a json file.
+     *
+     * @param  string $path
+     * @return void
+     */
+    public function importJsonFile($path)
+    {
+        $this->importJsonString(file_get_contents($path));
+    }
+
+    /**
+     * Export registry values into an array.
+     *
+     * @return array
+     */
+    public function export()
+    {
+        return $this->exportAsArray();
+    }
+
+    /**
+     * Export registry values into an array.
+     *
+     * @return array
+     */
+    public function exportAsArray()
+    {
+        $export = array();
+
+        foreach ($this->registry as $key => $entity) {
+            $export[$key] = $entity->getValue();
+        }
+
+        return $export;
+    }
+
+    /**
+     * Export registry values into a JSON string.
+     *
+     * @param  int   $flags JSON encode flags, like JSON_PRETTY_PRINT.
+     * @return array
+     */
+    public function exportAsJson($flags = 0)
+    {
+        return json_encode($this->exportAsArray(), $flags);
+    }
+
+    /**
+     * Export the registry as internaly stored.
+     *
+     * @return array
+     */
+    public function exportRaw()
+    {
+        return $this->registry;
+    }
+
+    /**
+     * Merge with an other manager instance.
+     *
+     * @param  ManagerInterface $source
+     * @param  bool             $overide Overide local keys.
+     * @return void
+     */
+    public function merge(ManagerInterface $source, $overide = true)
+    {
+        foreach ($source->exportRaw() as $key => $value) {
+            if ($overide or ! $this->has($key)) {
+                $this->registry[$key] = $value;
+            }
+        }
+    }
+
+    /**
+     * Reset the registry to an empty state.
+     *
+     * @return void
+     */
+    public function reset()
+    {
+        $this->registry = [];
+    }
+
+    /**
      * {@inheritdocs}
      */
     public function registerAsGlobal()
@@ -51,6 +169,25 @@ class Manager implements ArrayAccess, ManagerInterface
         }
 
         $this->registry[$key]->setValue($value);
+    }
+
+    /**
+     * Set a default value if the key is not set yet.
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     * @return bool
+     */
+    public function def($key, $value)
+    {
+        if ( ! $this->has($key)) {
+            $this->registry[$key] = $this->createNewEntityInstance();
+            $this->registry[$key]->setValue($value);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
